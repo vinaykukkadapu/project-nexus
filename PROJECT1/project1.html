@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: aqua;
+        }
+
+        .full-page {
+            width: 380px;
+            height: 480px;
+            background: rgba(22, 173, 214, 0.3);
+            padding: 10px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .form-btn {
+            padding: 10px 30px;
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            outline: none;
+            position: relative;
+            border-radius: 30px;
+            transition: background-color 0.5s;
+        }
+
+        .form-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Transparent white background on hover */
+        }
+
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .input-field {
+            width: 80%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #999;
+            outline: none;
+            background: transparent;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            width: 50%;
+            margin-top: 20px;
+            padding: 10px;
+            cursor: pointer;
+            background: rgb(23, 46, 219);
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            color: white;
+            transition: background-color 0.5s;
+        }
+
+        .submit-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Transparent white background on hover */
+        }
+
+        span {
+            color: #777;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="full-page">
+        <div class="toggle-btn">
+            <button id="signup-btn" class="form-btn" style="color: white;">SIGNUP</button>
+            <button id="login-btn" class="form-btn" style="color: white">LOGIN</button>
+        </div>
+        <div class="form-container">
+            <form id="signup-form">
+                <h2 style="text-align: center;">Signup</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="username" class="input-field" name="username" required></br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" class="input-field" placeholder="email" name="email" required></br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="password" class="input-field" name="password"
+                    required></br>
+
+                <label for="confirmpassword">Confirm password:</label>
+                <input type="password" id="confirmpassword" placeholder="confirm password" class="input-field"
+                    name="confirmpassword" required></br>
+                <button type="button" class="submit-btn" onclick="signup()">Sign Up</button>
+                <h4>Forgot passoword?</h4>
+                <p class="error-message" id="signup-error"></p>
+            </form>
+
+            <form id="login-form" style="display: none;">
+                <h2 style="text-align: center;">Login</h2>
+                <label for="loginUsername">User Email ID:</label>
+                <input type="text" id="loginUsername" class="input-field" placeholder="email" required></br>
+
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" class="input-field" placeholder="password" required></br>
+
+                <button type="button" class="submit-btn" onclick="login()">Login</button>
+                <h4>Forgot passoword?</h4>
+                <p class="error-message" id="login-error"></p>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('signup-btn').addEventListener('click', function () {
+            document.getElementById('signup-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+        });
+
+        document.getElementById('login-btn').addEventListener('click', function () {
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        });
+
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function signup() {
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmpassword').value;
+            var signupError = document.getElementById('signup-error');
+
+            if (!username || !email || !password || !confirmPassword) {
+                signupError.textContent = "All fields are required!";
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                signupError.textContent = "Invalid email address!";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                signupError.textContent = "Check the password and confirm password!";
+                return;
+            }
+
+            // If all checks pass, display success message
+            signupError.textContent = "Successfully registered!";
+        }
+
+        function login() {
+            var loginUsername = document.getElementById('loginUsername').value;
+            var loginPassword = document.getElementById('loginPassword').value;
+            var loginError = document.getElementById('login-error');
+
+            if (!loginUsername || !loginPassword) {
+                loginError.textContent = "All fields are required!";
+                return;
+            }
+
+            if (!isValidEmail(loginUsername)) {
+                loginError.textContent = "Invalid email address!";
+                return;
+            }
+
+            // If all checks pass, display success message
+            loginError.textContent = "Successfully logged in!";
+        }
+    </script>
+</body>
+
+</html>
